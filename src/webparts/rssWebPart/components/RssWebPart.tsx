@@ -53,130 +53,6 @@ export default class RssApp extends React.Component<IRssWebPartProps, IRssWebPar
     // this._getRssJson();    
   }
 
-  /** Alternative method */
-  private async _getRssJson(): Promise<any> {
-    let service: IGetDataService;
-    service = new SPDataService(this.props.context.httpClient, this.props.description);
-    service.getData().then((result) => {
-      console.log("result: ", result);
-      let xmlList = [];
-      let items = [];
-      let length = this.props.feedNum + 2;
-      // console.log("feedNum: ", this.props.feedNum);
-
-      for (let i = 2; i < length; i++) {
-        xmlList.push({
-          title: result.getElementsByTagName("title")[i].innerHTML,
-          description: result.getElementsByTagName("description")[i - 1].innerHTML,
-          author: result.getElementsByTagName("author")[i - 2].innerHTML,
-          link: result.getElementsByTagName("link")[i].innerHTML,
-          source: result.getElementsByTagName("title")[0].innerHTML,
-          date: result.getElementsByTagName("pubDate")[i - 2].innerHTML
-        });
-      }
-
-      console.log("xmlList: ", xmlList);
-      console.log("xml: ", result);
-
-      /** Loop through the parsed xml list and filter out what i need */
-      for (let i = 0; i < (length - 2); i++) {
-
-        /** Title */
-
-        let fullTitle = xmlList[i].title;
-        let feedTitle = fullTitle.replace(/&amp;/g, "&");
-
-        /** Description */
-
-        let desc = xmlList[i].description;
-        let trimed1 = desc.substring(desc.indexOf('<p>'), desc.lastIndexOf('<'));
-
-        // console.log("trimed1", trimed1);
-
-        // let split1 = trimed1.split("</p>");
-        // let trimed2, trimed3 = "";          
-
-        // for (let j = 0; j < 2; j++) {
-        //   trimed2 = this._replaceTxt(split1[j]);            
-        //   console.log("trimed2: ", trimed2);
-        //   if (trimed2.includes("</a>") == false) {
-        //     trimed3 += trimed2 + " ";
-        //   } else {
-        //     let stOne = trimed2.substr(0, trimed2.indexOf("<a"));
-        //     // console.log("stOne: ", stOne);
-        //     let stTwo = trimed2.substring(trimed2.indexOf('">') + 2, trimed2.lastIndexOf("</a")) + ". ";
-        //     // console.log("stTwo: ", stTwo);
-        //     trimed3 += (stOne + stTwo + " ");
-        //   }
-        // }
-        // console.log("trimed2: ", trimed2);
-        // console.log("trimed3: ", trimed3);   
-
-        let parse = require('html-react-parser');
-        let parsed = parse(trimed1);
-        // console.log("parsed: ", parsed);
-
-        /** Author */
-
-        let uAuthor = xmlList[i].author;
-        let author = uAuthor.substring(uAuthor.indexOf("(") + 1, uAuthor.lastIndexOf(")"));
-        // console.log("author: ", author);
-
-        /** image */
-
-        let imageLink;
-        if (desc.includes("img src=") == true) {
-          imageLink = desc.substring(desc.indexOf("img src") + 9, desc.indexOf(".jpg") + 4);
-        } else {
-          imageLink = "https://www.expressen.se/images/wasp-for-sharing.png";
-        }
-
-        /** Date */
-
-        let pDate = new Date(xmlList[i].date);
-        let nDate = new Date();
-        let setTime;
-
-        // console.log("bb: ", pDate);
-        // console.log("cc: ", nDate);
-
-        let tInMin = moment.utc(moment(nDate, "DD/MM/YYYY HH:mm:ss").diff(moment(pDate, "DD/MM/YYYY HH:mm:ss"))).format("mm");
-        let tInHr = moment.utc(moment(nDate, "DD/MM/YYYY HH:mm:ss").diff(moment(pDate, "DD/MM/YYYY HH:mm:ss"))).format("HH:mm");
-        console.log("nn: ", tInHr);
-        let tSplit = tInHr.split(":");
-        console.log("tSplit: ", tSplit);
-        let s1 = parseInt(tSplit[0]);
-
-        s1 == 0 ? (setTime = tInMin) : (setTime = tInHr);
-
-        this.setState({
-          title: feedTitle,
-          link: xmlList[i].link,
-          description: parsed,
-          author: author,
-          imgLink: imageLink,
-          date: setTime
-        });
-
-        // console.log("date: ", this.state.date);
-
-        items.push({
-          title: this.state.title,
-          description: this.state.description,
-          author: this.state.author,
-          link: this.state.link,
-          imgLink: this.state.imgLink,
-          source: '',
-          date: this.state.date
-        });
-      }
-
-      this.setState({ list: items });
-      console.log("items: ", items);
-      console.log("List: ", this.state.list);
-    })
-  }
-
   private _fetchApiData = () => {
 
     let url = this.state.url;
@@ -296,6 +172,107 @@ export default class RssApp extends React.Component<IRssWebPartProps, IRssWebPar
         console.log("List: ", this.state.list);
 
       });
+  }
+
+  /** Alternative method */
+  private async _getRssJson(): Promise<any> {
+    let service: IGetDataService;
+    service = new SPDataService(this.props.context.httpClient, this.props.description);
+    service.getData().then((result) => {
+      console.log("result: ", result);
+      let xmlList = [];
+      let items = [];
+      let length = this.props.feedNum + 2;
+      // console.log("feedNum: ", this.props.feedNum);
+
+      for (let i = 2; i < length; i++) {
+        xmlList.push({
+          title: result.getElementsByTagName("title")[i].innerHTML,
+          description: result.getElementsByTagName("description")[i - 1].innerHTML,
+          author: result.getElementsByTagName("author")[i - 2].innerHTML,
+          link: result.getElementsByTagName("link")[i].innerHTML,
+          source: result.getElementsByTagName("title")[0].innerHTML,
+          date: result.getElementsByTagName("pubDate")[i - 2].innerHTML
+        });
+      }
+
+      console.log("xmlList: ", xmlList);
+      console.log("xml: ", result);
+
+      /** Loop through the parsed xml list and filter out what i need */
+      for (let i = 0; i < (length - 2); i++) {
+
+        /** Title */
+
+        let fullTitle = xmlList[i].title;
+        let feedTitle = fullTitle.replace(/&amp;/g, "&");
+
+        /** Description */
+
+        let desc = xmlList[i].description;
+        let trimed1 = desc.substring(desc.indexOf('<p>'), desc.lastIndexOf('<'));
+        
+        let parse = require('html-react-parser');
+        let parsed = parse(trimed1);
+        // console.log("parsed: ", parsed);
+
+        /** Author */
+
+        let uAuthor = xmlList[i].author;
+        let author = uAuthor.substring(uAuthor.indexOf("(") + 1, uAuthor.lastIndexOf(")"));
+        // console.log("author: ", author);
+
+        /** image */
+
+        let imageLink;
+        if (desc.includes("img src=") == true) {
+          imageLink = desc.substring(desc.indexOf("img src") + 9, desc.indexOf(".jpg") + 4);
+        } else {
+          imageLink = "https://www.expressen.se/images/wasp-for-sharing.png";
+        }
+
+        /** Date */
+
+        let pDate = new Date(xmlList[i].date);
+        let nDate = new Date();
+        let setTime;
+
+
+        let tInMin = moment.utc(moment(nDate, "DD/MM/YYYY HH:mm:ss").diff(moment(pDate, "DD/MM/YYYY HH:mm:ss"))).format("mm");
+        let tInHr = moment.utc(moment(nDate, "DD/MM/YYYY HH:mm:ss").diff(moment(pDate, "DD/MM/YYYY HH:mm:ss"))).format("HH:mm");
+        console.log("nn: ", tInHr);
+        let tSplit = tInHr.split(":");
+        console.log("tSplit: ", tSplit);
+        let s1 = parseInt(tSplit[0]);
+
+        s1 == 0 ? (setTime = tInMin) : (setTime = tInHr);
+
+        this.setState({
+          title: feedTitle,
+          link: xmlList[i].link,
+          description: parsed,
+          author: author,
+          imgLink: imageLink,
+          date: setTime
+        });
+
+        // console.log("date: ", this.state.date);
+
+        items.push({
+          title: this.state.title,
+          description: this.state.description,
+          author: this.state.author,
+          link: this.state.link,
+          imgLink: this.state.imgLink,
+          source: '',
+          date: this.state.date
+        });
+      }
+
+      this.setState({ list: items });
+      console.log("items: ", items);
+      console.log("List: ", this.state.list);
+    })
   }
 
   /** Opens new window */
