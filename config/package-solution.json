@@ -1,0 +1,12 @@
+{
+  "$schema": "https://dev.office.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "rss-app-client-side-solution",
+    "id": "eefd7bdc-9333-43b5-a6e0-c94dc10967d9",
+    "version": "1.0.1.0",
+    "includeClientSideAssets": true
+  },
+  "paths": {
+    "zippedPackage": "solution/rss-app.sppkg"
+  }
+}

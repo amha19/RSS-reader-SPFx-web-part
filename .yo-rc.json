@@ -1,0 +1,8 @@
+{
+  "@microsoft/generator-sharepoint": {
+    "version": "1.4.1",
+    "libraryName": "rss-app",
+    "libraryId": "eefd7bdc-9333-43b5-a6e0-c94dc10967d9",
+    "environment": "spo"
+  }
+}

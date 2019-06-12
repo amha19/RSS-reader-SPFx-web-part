@@ -1,0 +1,97 @@
+@import '~@microsoft/sp-office-ui-fabric-core/dist/sass/SPFabricCore.scss';
+
+.rssApp {
+
+  .nyheterOchIcon {
+    padding: 1px 8px 1px 5px;    
+    background-color: #000099;
+    border: 1px solid #d9d9d9;
+    margin-bottom: 4px;
+    max-width: 720px;
+  }
+
+  .nyheter {
+    margin: 0px;
+
+    h1 {    
+      color: #fff;    
+    }
+  }
+
+  .iconDiv {
+    cursor: pointer;
+    opacity: 0.4;
+    transition: 0.3s;    
+  }
+  
+  .iconDiv:hover{    
+    opacity: 1;
+  }  
+  
+  .container {
+    padding: 0px;
+    border: 1px solid #d9d9d9;
+    border-radius: 8px;
+    box-shadow: 1px 1px 8px 2px #f3f3f3;
+    display: flex;
+    flex-wrap: nowrap;
+    max-width: 736px;
+  } 
+
+  .imgDiv {
+    margin: 8px;
+  }
+
+  .newsImg  img {
+    border: 1px solid #d9d9d9;
+    border-radius: 5px;
+    box-shadow: 1px 1px 8px 2px #f3f3f3;
+    margin-top: 22px;
+  }
+  
+  .textContainer {
+    margin: 8px;
+    max-width: 520px;    
+  }  
+
+  .titleText {
+    margin-bottom: -7px;
+  }
+
+  .titleText h3 {
+    cursor: pointer;
+  }
+
+  h3:hover {
+    color: #000066;
+  }
+
+  .descriptionText {
+    margin-bottom: -5px;
+  }
+
+  .descriptionText p:last-child {
+    margin-bottom: 17px;
+  }
+
+  .descriptionText p {
+    margin-top: -10px;
+  }
+  
+
+  .autherAndTime{
+    margin: auto;
+    font-style: italic;
+  }
+
+  .authorText {
+    color: #000033;
+    float: left;
+    margin-top: -14px;
+  }
+
+  .timeText {
+    float: right;
+  }  
+}
+
