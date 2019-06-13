@@ -391,7 +391,7 @@ export default class RssApp extends React.Component<IRssWebPartProps, IRssWebPar
             <h1 style={{ paddingLeft: 8, fontStyle: "italic" }}>Nyheter</h1>
           </div>          
           <div style={{ position: "relative"}} className={styles.iconDiv}>
-            <Icon styles={{ root: { fontSize: "28px", position: "absolute", color: "white", top: '-50px', left: '95%' } }}
+            <Icon styles={{ root: { fontSize: "28px", position: "absolute", color: "white", top: '-50px', left: '92%' } }}
             onClick={this._setPanel.bind(this)}  iconName="More" />
           </div>
         </div>

@@ -36,7 +36,13 @@
     display: flex;
     flex-wrap: nowrap;
     max-width: 736px;
-  } 
+    
+  }
+  
+  .container:hover {
+    border: 1px solid #000066;
+    box-shadow: 1px 1px 8px 2px #d9d9d9;
+  }
 
   .imgDiv {
     margin: 8px;
@@ -68,6 +74,7 @@
 
   .descriptionText {
     margin-bottom: -5px;
+    max-width: 95%;
   }
 
   .descriptionText p:last-child {
